@@ -513,9 +513,9 @@ void myButtonCtrlTask(void *argument)
   {
     osDelay(100);
     if(HAL_GPIO_ReadPin(Button_GPIO_Port, Button_Pin) == GPIO_PIN_RESET){
-      osDelay(20);
+      osDelay(40);
       if(HAL_GPIO_ReadPin(Button_GPIO_Port, Button_Pin) == GPIO_PIN_RESET){
-	UARTWriteString("Button was pressed\n");
+    	UARTWriteString("Button was pressed\n");
       }
     }
   }

@@ -68,7 +68,7 @@ void Error_Handler(void);
 #define LED_OnBoard_GPIO_Port GPIOC
 #define LM35_Pin GPIO_PIN_5
 #define LM35_GPIO_Port GPIOA
-#define Button_Pin GPIO_PIN_15
+#define Button_Pin GPIO_PIN_9
 #define Button_GPIO_Port GPIOA
 #define LED_Red_Pin GPIO_PIN_3
 #define LED_Red_GPIO_Port GPIOB

@@ -27,11 +27,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  11 .ARM.attributes 00000029  00000000  00000000  000201e0  2**0
                   CONTENTS, READONLY
- 12 .debug_info   000261c4  00000000  00000000  00020209  2**0
+ 12 .debug_info   000261c5  00000000  00000000  00020209  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_abbrev 00004b35  00000000  00000000  000463cd  2**0
+ 13 .debug_abbrev 00004b35  00000000  00000000  000463ce  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_loc    00015c5f  00000000  00000000  0004af02  2**0
+ 14 .debug_loc    00015c5f  00000000  00000000  0004af03  2**0
                   CONTENTS, READONLY, DEBUGGING
  15 .debug_aranges 000013d8  00000000  00000000  00060b68  2**3
                   CONTENTS, READONLY, DEBUGGING
@@ -41,11 +41,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
  18 .debug_line   0001519e  00000000  00000000  0007e7be  2**0
                   CONTENTS, READONLY, DEBUGGING
- 19 .debug_str    000999d6  00000000  00000000  0009395c  2**0
+ 19 .debug_str    000999d5  00000000  00000000  0009395c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 20 .comment      0000007b  00000000  00000000  0012d332  2**0
+ 20 .comment      0000007b  00000000  00000000  0012d331  2**0
                   CONTENTS, READONLY
- 21 .debug_frame  00004fc8  00000000  00000000  0012d3b0  2**2
+ 21 .debug_frame  00004fc8  00000000  00000000  0012d3ac  2**2
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -1175,18 +1175,18 @@ static void WriteLedPin(LED_IDX ledIdx, FlagStatus flagStat){
       SendInvalidCommandMsg();
  8000ca0:	f7ff ff6c 	bl	8000b7c <SendInvalidCommandMsg>
  8000ca4:	e7d9      	b.n	8000c5a <URATCommandParser+0x5e>
-	WriteLedPin(ledIdx, RESET);
+    	WriteLedPin(ledIdx, RESET);
  8000ca6:	4620      	mov	r0, r4
  8000ca8:	2100      	movs	r1, #0
  8000caa:	f7ff ff81 	bl	8000bb0 <WriteLedPin>
  8000cae:	e7d4      	b.n	8000c5a <URATCommandParser+0x5e>
-	ledBlinkRatePerSecond[ledIdx] = atoi(cmd[3]);
+    	ledBlinkRatePerSecond[ledIdx] = atoi(cmd[3]);
  8000cb0:	9804      	ldr	r0, [sp, #16]
  8000cb2:	f003 ffdf 	bl	8004c74 <atoi>
  8000cb6:	4b0d      	ldr	r3, [pc, #52]	; (8000cec <URATCommandParser+0xf0>)
  8000cb8:	5518      	strb	r0, [r3, r4]
  8000cba:	e7ce      	b.n	8000c5a <URATCommandParser+0x5e>
-	WriteLedPin(ledIdx, SET);
+    	WriteLedPin(ledIdx, SET);
  8000cbc:	4620      	mov	r0, r4
  8000cbe:	2101      	movs	r1, #1
  8000cc0:	f7ff ff76 	bl	8000bb0 <WriteLedPin>
@@ -1378,29 +1378,29 @@ void myButtonCtrlTask(void *argument)
     osDelay(100);
     if(HAL_GPIO_ReadPin(Button_GPIO_Port, Button_Pin) == GPIO_PIN_RESET){
  8000e0a:	4c0d      	ldr	r4, [pc, #52]	; (8000e40 <myButtonCtrlTask+0x38>)
-      osDelay(20);
+      osDelay(40);
       if(HAL_GPIO_ReadPin(Button_GPIO_Port, Button_Pin) == GPIO_PIN_RESET){
-	UARTWriteString("Button was pressed\n");
+    	UARTWriteString("Button was pressed\n");
  8000e0c:	4d0d      	ldr	r5, [pc, #52]	; (8000e44 <myButtonCtrlTask+0x3c>)
     osDelay(100);
  8000e0e:	2064      	movs	r0, #100	; 0x64
  8000e10:	f002 fa36 	bl	8003280 <osDelay>
     if(HAL_GPIO_ReadPin(Button_GPIO_Port, Button_Pin) == GPIO_PIN_RESET){
- 8000e14:	f44f 4100 	mov.w	r1, #32768	; 0x8000
+ 8000e14:	f44f 7100 	mov.w	r1, #512	; 0x200
  8000e18:	4809      	ldr	r0, [pc, #36]	; (8000e40 <myButtonCtrlTask+0x38>)
  8000e1a:	f001 f909 	bl	8002030 <HAL_GPIO_ReadPin>
  8000e1e:	2800      	cmp	r0, #0
  8000e20:	d1f5      	bne.n	8000e0e <myButtonCtrlTask+0x6>
-      osDelay(20);
- 8000e22:	2014      	movs	r0, #20
+      osDelay(40);
+ 8000e22:	2028      	movs	r0, #40	; 0x28
  8000e24:	f002 fa2c 	bl	8003280 <osDelay>
       if(HAL_GPIO_ReadPin(Button_GPIO_Port, Button_Pin) == GPIO_PIN_RESET){
- 8000e28:	f44f 4100 	mov.w	r1, #32768	; 0x8000
+ 8000e28:	f44f 7100 	mov.w	r1, #512	; 0x200
  8000e2c:	4620      	mov	r0, r4
  8000e2e:	f001 f8ff 	bl	8002030 <HAL_GPIO_ReadPin>
  8000e32:	2800      	cmp	r0, #0
  8000e34:	d1eb      	bne.n	8000e0e <myButtonCtrlTask+0x6>
-	UARTWriteString("Button was pressed\n");
+    	UARTWriteString("Button was pressed\n");
  8000e36:	4628      	mov	r0, r5
  8000e38:	f7ff fe90 	bl	8000b5c <UARTWriteString>
  8000e3c:	e7e7      	b.n	8000e0e <myButtonCtrlTask+0x6>
@@ -1551,7 +1551,7 @@ void myButtonCtrlTask(void *argument)
   HAL_GPIO_Init(LED_OnBoard_GPIO_Port, &GPIO_InitStruct);
  8000f2a:	f000 ff95 	bl	8001e58 <HAL_GPIO_Init>
   GPIO_InitStruct.Pin = Button_Pin;
- 8000f2e:	f44f 4200 	mov.w	r2, #32768	; 0x8000
+ 8000f2e:	f44f 7200 	mov.w	r2, #512	; 0x200
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
  8000f32:	4b4d      	ldr	r3, [pc, #308]	; (8001068 <main+0x1c8>)
   HAL_GPIO_Init(Button_GPIO_Port, &GPIO_InitStruct);

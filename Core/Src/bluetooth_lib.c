@@ -123,19 +123,19 @@ void URATCommandParser ()
     else {
       if(StringCompare((char*) cmd[1], (char*)"on", strlen("on")))
       {
-	WriteLedPin(ledIdx, RESET);
+    	WriteLedPin(ledIdx, RESET);
       }
       else if(StringCompare((char*)cmd[1], (char*)"off", strlen("off")))
       {
-	WriteLedPin(ledIdx, SET);
+    	WriteLedPin(ledIdx, SET);
       }
       else if(StringCompare((char*)cmd[1], (char*)"blink", strlen("blink")))
       {
-	ledBlinkRatePerSecond[ledIdx] = atoi(cmd[3]);
+    	ledBlinkRatePerSecond[ledIdx] = atoi(cmd[3]);
       }
       else
       {
-	SendInvalidCommandMsg();
+    	SendInvalidCommandMsg();
       }
     }
   }
