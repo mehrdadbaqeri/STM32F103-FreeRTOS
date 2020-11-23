@@ -1,0 +1,5 @@
+bluetooth_lib.c:22:16:StringCompare	12	static
+bluetooth_lib.c:151:6:UARTWriteString	8	static
+bluetooth_lib.c:82:13:SendInvalidCommandMsg	24	static
+bluetooth_lib.c:93:13:WriteLedPin	4	static
+bluetooth_lib.c:114:6:URATCommandParser	48	static

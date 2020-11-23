@@ -1,0 +1,8 @@
+main.c:425:6:onboardLedCtrlTask	8	static
+main.c:484:6:redLedCtrlTask	8	static
+main.c:449:6:getTemperatureTask	48	static
+main.c:508:6:myButtonCtrlTask	8	static
+main.c:202:6:SystemClock_Config	96	static
+main.c:113:5:main	48	static
+main.c:533:6:HAL_TIM_PeriodElapsedCallback	0	static
+main.c:550:6:Error_Handler	0	static
