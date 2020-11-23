@@ -174,7 +174,6 @@
 		<project id="STM32F103-FreeRTOS.null.459779429" name="STM32F103-FreeRTOS"/>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
-	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		<scannerConfigBuildInfo instanceId="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.release.95671254;com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.release.95671254.;com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.362576364;com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.2052004460">
@@ -191,5 +190,17 @@
 		<configuration configurationName="Release">
 			<resource resourceType="PROJECT" workspacePath="/SimpleSTM32F103Project"/>
 		</configuration>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets">
+		<buildTargets>
+			<target name="test" path="Debug" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
+				<buildCommand>make</buildCommand>
+				<buildArguments>-j8</buildArguments>
+				<buildTarget>test</buildTarget>
+				<stopOnError>true</stopOnError>
+				<useDefaultCommand>true</useDefaultCommand>
+				<runAllBuilders>true</runAllBuilders>
+			</target>
+		</buildTargets>
 	</storageModule>
 </cproject>
