@@ -50,8 +50,8 @@ STM32F103-FreeRTOS.bin \
 all: STM32F103-FreeRTOS.elf secondary-outputs
 
 # Tool invocations
-STM32F103-FreeRTOS.elf: $(OBJS) $(USER_OBJS) C:\work\STM32CubeIDE\workspace\STM32F103-FreeRTOS\STM32F103C6TX_FLASH.ld
-	arm-none-eabi-gcc -o "STM32F103-FreeRTOS.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\work\STM32CubeIDE\workspace\STM32F103-FreeRTOS\STM32F103C6TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32F103-FreeRTOS.map" -Wl,--gc-sections -static -Wl,--print-memory-usage -flto --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+STM32F103-FreeRTOS.elf: $(OBJS) $(USER_OBJS) C:\work\STM32CubeIDE\workspace\STM32F103-FreeRTOS\STM32F103C8TX_FLASH.ld
+	arm-none-eabi-gcc -o "STM32F103-FreeRTOS.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\work\STM32CubeIDE\workspace\STM32F103-FreeRTOS\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32F103-FreeRTOS.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
