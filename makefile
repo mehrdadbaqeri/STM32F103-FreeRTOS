@@ -13,13 +13,14 @@ export MESSAGES
 TARGET_ARCH = -mcpu=cortex-m3 -mthumb
 DEVICE_TYPE = STM32F103xB
 
-INCLUDE_DIRS = -I . -I ./Core/Inc -I ./Drivers/CMSIS/Device/ST/STM32F1xx/Include/\
+INCLUDE_DIRS = -I ./Core/Inc -I ./Drivers/CMSIS/Device/ST/STM32F1xx/Include/\
  -I ./Drivers/CMSIS/Include/ -I ./Drivers/STM32F1xx_HAL_Driver/Inc/\
+ -I ./Drivers/CMSIS/Include/ -I ./Drivers/STM32F1xx_HAL_Driver/Inc/Legacy\
  -I ./Middlewares/Third_Party/FreeRTOS/Source/include/\
  -I ./Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/\
  -I ./Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/\
 
-DEFINES = -D$(DEVICE_TYPE) -DHSE_VALUE=$(HSE_VALUE)
+DEFINES = -D$(DEVICE_TYPE) -DHSE_VALUE=$(HSE_VALUE) -DUSE_HAL_DRIVER
 
 export DEFINES
 
@@ -30,14 +31,17 @@ ifdef DEBUG
  TARGET_OPTS = -O2 -g3
  DEBUG_MACRO = -DDEBUG
 else
- TARGET_OPTS = -O2 $(F_INLINE) $(F_INLINE_ONCE) $(F_UNROLL_LOOPS)
+ #TARGET_OPTS = -O2 $(F_INLINE) $(F_INLINE_ONCE) $(F_UNROLL_LOOPS)
+ TARGET_OPTS = -O0 -g3 -ffunction-sections -fdata-sections 
  F_INLINE = -finline
  F_INLINE_ONCE = -finline-functions-called-once
  #F_UNROLL_LOOPS = -funroll-loops
 endif
 
+BUILD_DIR=Build
+
 CC = arm-none-eabi-gcc
-CFLAGS = -std=gnu99 $(COMPILE_OPTS)
+CFLAGS = -std=gnu11 $(COMPILE_OPTS)
 
 AS = $(CC) -x assembler-with-cpp -c $(TARGET_ARCH)
 ASFLAGS = $(COMPILE_OPTS)
@@ -61,16 +65,18 @@ MAIN_BIN = $(MAIN_OUT:%.elf=%.bin)
 
 MAIN_SRCS = ./Core/Src/system_stm32f1xx.c\
 	$(wildcard ./Drivers/STM32F1xx_HAL_Driver/Src/*.c)\
-	$(wildcard ./Middlewares/ST/STM32_USB_Device_Library/Core/Src/*.c)\
-	$(wildcard ./Middlewares/ST/STM32_USB_Device_Library/Class/CustomHID/Src/*.c)\
 	$(wildcard ./Core/Src/*.c)\
+	$(wildcard ./Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/*.c)\
+	$(wildcard ./Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/*.c)\
+	$(wildcard ./Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/*.c)\
+	$(wildcard ./Middlewares/Third_Party/FreeRTOS/Source/*.c)\
 
 MAIN_OBJS = $(sort \
 	$(patsubst %.c,%.o,$(MAIN_SRCS)) \
 	$(STARTUP_OBJ))
 
 .PHONY: all
-all: $(MAIN_BIN)
+all: clean $(MAIN_BIN)
 
 $(MAIN_OUT): $(MAIN_OBJS) $(FWLIB) $(USBLIB)
 	$(LD) $(LDFLAGS) $(TARGET_ARCH) $^ -o $@
@@ -88,7 +94,11 @@ $(MAIN_OBJS): $(wildcard ./Drivers/CMSIS/Device/ST/STM32F1xx/Include/*.h) \
 
 $(MAIN_BIN): $(MAIN_OUT)
 	$(OBJCOPY) $(OBJCOPYFLAGS) $< $@
+	- mkdir -p $(BUILD_DIR)
+	- mv $(MAIN_BIN) $(MAIN_OUT) $(MAIN_MAP) $(BUILD_DIR)
+	- find . -name \*.o -exec mv {} $(BUILD_DIR) \;
 
 clean:
 	find . -name \*.o -exec rm {} \;
+	rm -rf $(BUILD_DIR)
 	rm -rf $(MAIN_BIN) $(MAIN_OUT) $(MAIN_MAP)
